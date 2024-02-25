@@ -7,6 +7,8 @@ function addItem() {
     const newItem = document.getElementById("newItem").value
     todoItems.push(newItem)
 
+    document.getElementById("newItem").value = ""
+
     showItems()
 
     //if(todoItems.length == 1){}
@@ -24,30 +26,26 @@ function showItems() {
 
         const deleteButton = document.createElement("button")
         deleteButton.innerHTML = "Delete"
-        //deleteButton.addEventListener("click", deleteTask)
-        setIndex(index)
-        deleteButton.onclick = deleteTask
+        deleteButton.addEventListener("click", (deleteTask) => {
+            todoItems.splice(index, 1)
+            showItems()
+        })
+        // setIndex(index)
 
         const updateButton = document.createElement("button")
+        updateButton.innerHTML = "Update"
+        updateButton.addEventListener("click", (updateTask) => {
+            document.getElementById("newItem").value = item      //displays item in input field to allow for edit
+            todoItems.splice(index, 1)
+            showItems()            
+        })
+        
 
         li.appendChild(deleteButton)
+        li.appendChild(updateButton)
         itemList.appendChild(li)
 
     }
-}
-
-function setIndex(index) {    // the app todo list was not updating when arguemtn was passed into deleteTask so custom getter and setters had to be created
-    mainIndex = index
-}
-
-function getIndex() {
-    return mainIndex
-} 
-
-function deleteTask() {
-    var ind = getIndex()
-    todoItems.splice(ind, 1)
-    showItems()
 }
 
 console.log(todoItems.length)
